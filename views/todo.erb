@@ -1,0 +1,51 @@
+<div>
+
+  <h1>Needs to be Scouted</h1>
+  <div class="ui link stackable cards">
+    <% @teams.each do |team| %>
+        <a href="/team/<%= team.id %>">
+          <div class="card" st>
+            <div class=" ui fluid image" style="height: 300px;">
+              <img src="<%= team.photos %>" style="height: 100%">
+            </div>
+            <div class="content">
+              <div class="header"><%= team.name + ', ' + team.number.to_s %></div>
+              <div class="meta">
+                <a><%= "Completed:  " + team.completed.to_s %></a>
+              </div>
+              <div class="description">
+                <%= "By: " + team.teamMate %>      </div>
+            </div>
+          </div>
+        </a>
+    <% end %>
+  </div>
+</div>
+<h1>Done</h1>
+<div class="ui link stackable cards">
+  <% @teamsDone.each do |team| %>
+      <a href="/team/<%= team.id %>">
+        <div class="card">
+          <div class="ui fluid image" style="height:300px">
+            <img src="<%= team.photos %>" style="height: 100%">
+          </div>
+          <div class="content">
+            <div class="header"><%= team.name + ', ' + team.number.to_s %></div>
+            <div class="meta">
+              <a><%= "Completed:  " + team.completed.to_s %></a>
+            </div>
+            <div class="description">
+              <%= "By: " + team.teamMate %>      </div>
+          </div>
+        </div>
+      </a>
+  <% end %>
+</div>
+  </div>
+<script>
+  $('.image').visibility({
+    type       : 'image',
+    transition : 'fade in',
+    duration   : 200
+  })
+</script>

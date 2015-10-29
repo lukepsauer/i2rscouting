@@ -1,0 +1,111 @@
+  <h1 class="text-center ui dividing header">Edit Team: <%= @team.name %></h1>
+  <form class="ui form" action="/team/update/<%= @team.id %>" enctype="multipart/form-data" method="post" style="padding-bottom:200px;padding-left: 25px; padding-right: 25px">
+    <div class="three fields">
+    <div class="field">
+      <label>Name</label>
+      <input name="name" type="text" id="name" value="<%= @team.name %>">
+    </div>
+    <div class="field">
+      <label>Number</label>
+      <input name="number" type="number" id="number" value="<%= @team.number %>">
+    </div>
+
+        <div class="field">
+          <label>Team Member</label>
+          <select name="member" id="member" class="ui dropdown">
+            <option value="nil">Undefined</option>
+            <% @users.each do |member| %>
+                <option <% if @team.teamMate == member.name %> selected <% end %> value="<%= member.name %>"><%= member.name %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+    <div class="two fields">
+      <div class="field">
+    <input type="file" id="file" name="file">
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" id="completed" <% if @team.completed %> checked <% end %> name="completed">
+        <label for="completed">Completed?</label>
+      </div>
+    </div>
+    <div class="ui horizontal divider">
+      Autonomous
+    </div>
+    <div class="field">
+    <div class="five fields">
+      <div class="ui checkbox" style="padding-right: 25px; padding-top: 25px">
+        <input type="checkbox" id="delay"<% if @team.delays %> checked <% end %>  name="delays">
+        <label for="delay">Delays?</label>
+      </div>
+      <div class="ui checkbox" style="padding-top: 25px; padding-right: 25px">
+        <input type="checkbox" id="beacon" <% if @team.beacon %> checked <% end %> name="beacon">
+        <label for="beacon">Beacon?</label>
+      </div>
+      <div class="field">
+        <label>Amount of Climbers Scored</label>
+        <select name="climbers" id="climbers" class="ui dropdown" style="padding-right: 50px">
+          <option value="0" <% if @team.climbersShelter == 0 %> selected <% end %>>0</option>
+          <option value="1" <% if @team.climbersShelter == 1 %> selected <% end %>>1</option>
+          <option value="2"<% if @team.climbersShelter == 2 %> selected <% end %>>2</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Height Reached (In points)</label>
+        <select name="autoHeight" id="autoHeight" class="ui dropdown">
+          <option value="0" <% if @team.autoHeight == 0 %> selected <% end %>>0</option>
+          <option value="5" <% if @team.autoHeight == 5 %> selected <% end %>>5</option>
+          <option value="10"<% if @team.autoHeight == 10 %> selected <% end %>>10</option>
+          <option value="20"<% if @team.autoHeight == 20 %> selected <% end %>>20</option>
+          <option value="40"<% if @team.autoHeight == 40 %> selected <% end %>>40</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Reliability (%)</label>
+        <input name="reliability" id="reliability" type="number" value="<%= @team.reliability %>" class="ui">
+      </div>
+    </div>
+  </div>
+    <div class="ui horizontal divider">
+      Tele-Op
+    </div>
+    <div class="field">
+      <div class="three fields">
+        <div class="ui checkbox" style="padding-right: 25px; padding-top: 25px">
+          <input type="checkbox" <% if @team.bar %> checked <% end %>id="bar" name="bar">
+          <label for="bar">All Clear Signal</label>
+        </div>
+        <div class="field">
+          <label>Height Reached</label>
+          <select name="climb" id="climb" class="ui dropdown">
+            <option value="0" <% if @team.climb == 0 %> selected <% end %>>None</option>
+            <option value="1" <% if @team.climb == 1 %> selected <% end %>>Low Zone</option>
+            <option value="2" <% if @team.climb == 2 %> selected <% end %>>Middle Zone</option>
+            <option value="3"<% if @team.climb == 3 %> selected <% end %>>High Zone</option>
+            <option value="4"<% if @team.climb == 4 %> selected <% end %>>Hang</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Height Scorable (Debris)</label>
+          <select name="debris" id="debris" class="ui dropdown">
+            <option value="0" <% if @team.debris == 0 %> selected <% end %>>None</option>
+            <option value="1" <% if @team.debris == 1 %> selected <% end %>>Low Zone</option>
+            <option value="2" <% if @team.debris == 2 %> selected <% end %>>Middle Zone</option>
+            <option value="3"<% if @team.debris == 3 %> selected <% end %>>High Zone</option>
+          </select>
+        </div>
+      </div>
+    </div>
+        <div class="field">
+          <label>Selected</label>
+          <input type="number" name="select" id="select" class="ui" value="<%= @team.picked %>">
+          <div style="padding-top: 10px"></div>
+          <button  class="ui button" type="submit">Submit</button>
+        </div>
+</form>
+  <a href="/team/delete/<%= @team.id %>"><button class="ui red button">
+    Delete
+  </button></a>
+
+
+
