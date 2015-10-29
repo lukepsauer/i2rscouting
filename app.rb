@@ -2,7 +2,7 @@ require 'bundler'
 Bundler.require
 enable :sessions
 
-DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://admin:admin@127.0.0.1:5432/test')
+DB = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://zvdzbexmzfxygx:hNpzV-aodyAMxXFlXSwyT8Tckl@ec2-54-225-197-30.compute-1.amazonaws.com:5432/d91g7rn8tfebk4')
 require './models.rb'
 
 def login?
