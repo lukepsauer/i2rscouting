@@ -26,10 +26,7 @@ class ScoutingApp < Sinatra::Base
 
   post '/team/update/:id' do
     team = Team.first(:id => params[:id])
-    if params[:file] != nil
-      filetype = params[:file][:filename].split('.')[1]
-      team.photos = "/team/photos/#{team.number}.#{filetype}"
-    end
+
     team.picked = params[:select]
     team.debris = params[:debris]
     team.climb = params[:climb]
@@ -42,7 +39,16 @@ class ScoutingApp < Sinatra::Base
     team.name = params[:name]
     team.number = params[:number]
     team.completed = checkbox(params[:completed])
+
+
+=begin
+    if params[:file] != nil
+      name = Cloudinary::Uploader.upload(params[:file][:tempfile], api_key: '775114683723846', api_secret: 'q0ldPxQtX4QdbVmbqo2bH8rrCU8', cloud_name: 'i2r')
+      filetype = params[:file][:filename].split('.')[1]
+      team.photos = cl_image_tag("#{name["public_id"]}.#{filetype}")
+    end
     team.save
+
     if params[:file] != nil
       file = params[:file][:tempfile]
 
@@ -50,6 +56,8 @@ class ScoutingApp < Sinatra::Base
         f.write(file.read)
       end
     end
+=end
+
     redirect "/team/#{team.id}"
   end
   get '/teams' do
@@ -125,7 +133,7 @@ class ScoutingApp < Sinatra::Base
   end
 
   post '/user/authenticate' do
-    u = User.first(:name => params[:username])
+    u = User.first(Sequel.ilike(:name, params[:username]))
     if u == nil
       redirect '/user/login'
     elsif u.password.to_s == params[:password]
