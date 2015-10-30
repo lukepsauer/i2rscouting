@@ -1,5 +1,5 @@
 class ScoutingApp < Sinatra::Base
-  enable :sessions
+  use Rack::Session::Cookie, :expire_after => 3600*24
 
   helpers do
     def login?
