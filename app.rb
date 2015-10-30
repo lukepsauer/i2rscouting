@@ -41,7 +41,7 @@ class ScoutingApp < Sinatra::Base
     team.completed = checkbox(params[:completed])
 
 
-=begin
+
     if params[:file] != nil
       name = Cloudinary::Uploader.upload(params[:file][:tempfile], api_key: '775114683723846', api_secret: 'q0ldPxQtX4QdbVmbqo2bH8rrCU8', cloud_name: 'i2r')
       filetype = params[:file][:filename].split('.')[1]
@@ -49,6 +49,7 @@ class ScoutingApp < Sinatra::Base
     end
     team.save
 
+=begin
     if params[:file] != nil
       file = params[:file][:tempfile]
 
@@ -57,8 +58,11 @@ class ScoutingApp < Sinatra::Base
       end
     end
 =end
-
+  if !checkbox(params[:completed])
     redirect "/team/#{team.id}"
+  else
+    redirect "/teams"
+  end
   end
   get '/teams' do
     login?
