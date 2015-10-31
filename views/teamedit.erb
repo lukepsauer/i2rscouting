@@ -67,10 +67,14 @@
       Tele-Op
     </div>
     <div class="field">
-      <div class="three fields">
+      <div class="four fields">
         <div class="ui checkbox" style="padding-right: 25px; padding-top: 25px">
           <input type="checkbox" <% if @team.bar %> checked <% end %>id="bar" name="bar">
           <label for="bar">All Clear Signal</label>
+        </div>
+        <div class="field">
+          <label>Amount of Climbers</label>
+          <input name="kick" id="kick" type="number" value="<%= @team.competition %>" class="ui">
         </div>
         <div class="field">
           <label>Height Reached</label>

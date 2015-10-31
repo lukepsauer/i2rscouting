@@ -39,6 +39,7 @@ class ScoutingApp < Sinatra::Base
     team.name = params[:name]
     team.number = params[:number]
     team.completed = checkbox(params[:completed])
+    team.competition = params[:kick]
     team.save
 
 
