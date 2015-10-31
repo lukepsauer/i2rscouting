@@ -39,8 +39,10 @@ class ScoutingApp < Sinatra::Base
     team.name = params[:name]
     team.number = params[:number]
     team.completed = checkbox(params[:completed])
+    team.save
 
 
+=begin
 
     if params[:file] != nil
       name = Cloudinary::Uploader.upload(params[:file][:tempfile], api_key: '775114683723846', api_secret: 'q0ldPxQtX4QdbVmbqo2bH8rrCU8', cloud_name: 'i2r')
