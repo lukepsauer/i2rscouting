@@ -73,9 +73,12 @@
           <label for="bar">All Clear Signal</label>
         </div>
         <div class="field">
-          <label>Amount of Climbers</label>
-          <input name="kick" id="kick" type="number" value="<%= @team.competition %>" class="ui">
-        </div>
+          <label>Amount of Climbers (inclusive)</label>
+          <select name="kick" id="kick" class="ui dropdown">
+            <option value="0" <% if @team.competition == 0 %> selected <% end %>>None</option>
+            <option value="1" <% if @team.competition == 1 %> selected <% end %>>Low Zone</option>
+            <option value="2" <% if @team.competition == 2 %> selected <% end %>>Up to Middle Zone</option>
+            <option value="3"<% if @team.competition == 3 %> selected <% end %>>Up to High Zone</option></select>        </div>
         <div class="field">
           <label>Height Reached</label>
           <select name="climb" id="climb" class="ui dropdown">
