@@ -26,7 +26,7 @@ class ScoutingApp < Sinatra::Base
 
   post '/team/update/:id' do
     team = Team.first(:id => params[:id])
-
+    team.teamMate = params[:member]
     team.picked = params[:select]
     team.debris = params[:debris]
     team.climb = params[:climb]
