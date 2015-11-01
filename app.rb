@@ -69,8 +69,8 @@ class ScoutingApp < Sinatra::Base
   end
   get '/teams' do
     login?
-    @teams = Team.all.order(:number => desc)
-    @teamsSelected = Team.exclude(:picked => nil || 0).order(:number => desc)
+    @teams = Team.all
+    @teamsSelected = Team.exclude(:picked => nil || 0)
     erb :teams
   end
 
@@ -90,8 +90,8 @@ class ScoutingApp < Sinatra::Base
 
   get '/todo' do
     login?
-    @teamsDone = Team.where(:teamMate => session[:id]).where(:completed => true).order(:number => desc)
-    @teams = Team.where(:teamMate => session[:id]).where(:completed => false).order(:number => desc)
+    @teamsDone = Team.where(:teamMate => session[:id]).where(:completed => true)
+    @teams = Team.where(:teamMate => session[:id]).where(:completed => false)
 
     erb :todo
   end
@@ -115,8 +115,8 @@ class ScoutingApp < Sinatra::Base
 
   get '/teams/other' do
     login?
-    @teamsDone = Team.where(:completed => true).order(:number => desc)
-    @teams = Team.where(:completed => false).order(:number => desc)
+    @teamsDone = Team.where(:completed => true)
+    @teams = Team.where(:completed => false)
     erb :todo
   end
 
