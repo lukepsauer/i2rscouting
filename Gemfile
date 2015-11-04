@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 # Sinatra DSL
 gem 'sinatra'
 gem 'rake'
-#gem 'cloudinary'
+gem 'cloudinary'
 # Sequel ORM
 gem 'sequel'
 gem 'pg'

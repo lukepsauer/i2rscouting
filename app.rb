@@ -40,27 +40,13 @@ class ScoutingApp < Sinatra::Base
     team.number = params[:number]
     team.completed = checkbox(params[:completed])
     team.competition = params[:kick]
-    team.save
-
-
-=begin
 
     if params[:file] != nil
-      name = Cloudinary::Uploader.upload(params[:file][:tempfile], api_key: '775114683723846', api_secret: 'q0ldPxQtX4QdbVmbqo2bH8rrCU8', cloud_name: 'i2r')
-      filetype = params[:file][:filename].split('.')[1]
-      team.photos = cl_image_tag("#{name["public_id"]}.#{filetype}")
+      name = Cloudinary::Uploader.upload(params[:file][:tempfile], :quality=>100, :height=>300, :crop=>:lfill, :gravity=>:xy_center, api_key: '547116342579632', api_secret: 'm1obtBUPF4sbG5nNaLCttadv6tU', cloud_name: 'i2rscout')
+      team.photos = name["url"]
     end
     team.save
 
-=begin
-    if params[:file] != nil
-      file = params[:file][:tempfile]
-
-      File.open("./public/team/photos/#{team.number}.#{filetype}", 'wb') do |f|
-        f.write(file.read)
-      end
-    end
-=end
   if !checkbox(params[:completed])
     redirect "/team/#{team.id}"
   else
