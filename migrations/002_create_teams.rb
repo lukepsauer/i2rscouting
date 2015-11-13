@@ -18,6 +18,7 @@ Sequel.migration do
       Integer :climb
       Integer :debris
       FalseClass :bar
+      Integer :climbers
 
       #Autonomous
 

@@ -1,12 +1,12 @@
 class ScoutingApp < Sinatra::Base
   use Rack::Session::Cookie, :expire_after => 3600*24
-
   helpers do
     def login?
       @members = User.all
       if session[:id] == nil
         redirect '/user/login'
       end
+      @teamSearch= Team.order(:number)
     end
 
     def checkbox(test)
@@ -39,7 +39,7 @@ class ScoutingApp < Sinatra::Base
     team.name = params[:name]
     team.number = params[:number]
     team.completed = checkbox(params[:completed])
-    team.competition = params[:kick]
+    team.climbers = params[:kick]
 
     if params[:file] != nil
       name = Cloudinary::Uploader.upload(params[:file][:tempfile], :quality=>100, :height=>300, :crop=>:lfill, :gravity=>:xy_center, api_key: '547116342579632', api_secret: 'm1obtBUPF4sbG5nNaLCttadv6tU', cloud_name: 'i2rscout')
@@ -47,16 +47,16 @@ class ScoutingApp < Sinatra::Base
     end
     team.save
 
-  if !checkbox(params[:completed])
-    redirect "/team/#{team.id}"
-  else
-    redirect "/teams"
-  end
+    if !checkbox(params[:completed])
+      redirect "/team/#{team.id}"
+    else
+      redirect "/teams"
+    end
   end
   get '/teams' do
     login?
-    @teams = Team.all
-    @teamsSelected = Team.exclude(:picked => nil || 0)
+    @teams = Team.order(:number)
+    @teamsSelected = Team.exclude(:picked => nil || 0).order(:picked)
     erb :teams
   end
 
@@ -67,17 +67,51 @@ class ScoutingApp < Sinatra::Base
       u.password = params[:password].to_s
       u.save
       u = User.first(:name => params[:username])
-      session['id'] = u.id
+      session[:id] = u.id
       redirect '/'
     else
       redirect '/user/signup'
     end
   end
 
+=begin
+  post '/sorted' do
+
+      if params['autoclimbers']
+        @teams = Team.exclude(:climbersShelter => 0 || nil)
+      else
+        @teams = Team.exclude(:climbersShelter => 1 || 2)
+      end
+      if params['autoheight'] != nil || 0
+        @teams = @teams.where(:autoHeight => params['autoheight'])
+      end
+      if params['beacon']
+        @teams = @teams.exclude(:beacon => false || nil)
+      end
+      if params['delays']
+        @teams = @teams.exclude(:delays => false || nil)
+      end
+    if params["debris"] != nil || 0
+      @teams = @teams.where(:debris => params["debris"])
+    end
+    if params["climb"] != nil || 0
+      @teams = @teams.where(:climb => params["climb"])
+    end
+    if params["climbers"] != nil || 0
+      @teams = @teams.where(:climbers => params["climbers"])
+    end
+    if params['bar']
+      @teams = @teams.exclude(:bar => false || nil)
+    end
+    @teamsSelected = Team.exclude(:picked => nil || 0).order(:picked)
+    login?
+    erb :teams
+end
+=end
   get '/todo' do
     login?
-    @teamsDone = Team.where(:teamMate => session[:id]).where(:completed => true)
-    @teams = Team.where(:teamMate => session[:id]).where(:completed => false)
+    @teamsDone = Team.where(:teamMate => session[:id]).where(:completed => true).order(:number)
+    @teams = Team.where(:teamMate => session[:id]).where(:completed => false).order(:number)
 
     erb :todo
   end
@@ -86,10 +120,11 @@ class ScoutingApp < Sinatra::Base
     @members = User.all
     erb :login
   end
-
-  get '/user/signup' do
-    @members = User.all
-    erb :signup
+  if ENV['SIGNUP']
+    get '/user/signup' do
+      @members = User.all
+      erb :signup
+    end
   end
 
   get '/team/:id' do
@@ -101,8 +136,8 @@ class ScoutingApp < Sinatra::Base
 
   get '/teams/other' do
     login?
-    @teamsDone = Team.where(:completed => true)
-    @teams = Team.where(:completed => false)
+    @teamsDone = Team.where(:completed => true).order(:number)
+    @teams = Team.where(:completed => false).order(:number)
     erb :todo
   end
 
@@ -117,7 +152,7 @@ class ScoutingApp < Sinatra::Base
       u.save
       redirect '/teams'
     else
-      redirect '/user/signup'
+      redirect '/teams'
     end
   end
   get '/team/delete/:id' do
@@ -130,7 +165,7 @@ class ScoutingApp < Sinatra::Base
     if u == nil
       redirect '/user/login'
     elsif u.password.to_s == params[:password]
-      session['id'] = u.name
+      session[:id] = u.name
       redirect '/'
     else
       redirect '/user/login'
@@ -138,7 +173,7 @@ class ScoutingApp < Sinatra::Base
   end
 
   get '/user/signout' do
-    session['id'] = nil
+    session[:id] = nil
     redirect '/user/login'
   end
 end

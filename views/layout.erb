@@ -16,6 +16,7 @@
     <i class="home icon"></i>
     Home
   </a>
+
   <a class="item" href="/todo">
     <i class="inbox icon"></i>
     To Do
@@ -101,6 +102,23 @@
   function NewTeam() {
     $('.ui.small.modal').modal('show');
   }
+  var content = [
+    <%= @teamSearch %>
+    // etc
+  ];
+  console.log(content);
+  $('.ui.search')
+          .search({
+            source : content,
+            searchFields   : [
+              'title'
+            ],
+            searchFullText: false,
+            apiSettings: {
+              url: 'custom-search/?q={query}'
+            }
+          })
+  ;
 </script>
 </body>
 </html>

@@ -10,6 +10,11 @@ Sequel.migration do
       Integer :b1
       Integer :b2
 
+      String :r1done
+      String :r2done
+      String :b1done
+      String :b2done
+
     end
 
     # Convert all user email data to email records

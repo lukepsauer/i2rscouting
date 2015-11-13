@@ -1,4 +1,79 @@
-<div>
+<body>
+<!--<div class="ui sidebar inverted right visible thin vertical menu">
+  <a class="item disabled">
+    <form class="ui form" method="post" action="/sorted">
+      <div class="ui horizontal divider inverted">
+        Autonomous
+      </div>
+      <div class="field">
+        <div class="ui  checkbox inverted">
+          <input type="checkbox" name="delays">
+          <label style="color: #ffffff">Delays</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui  checkbox inverted">
+          <input type="checkbox" name="beacon">
+          <label style="color: #ffffff">Beacon</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui  checkbox inverted">
+          <input type="checkbox" name="autoclimbers">
+          <label style="color: #ffffff">Climbers</label>
+        </div>
+      </div>
+      <div class="field">
+        <label style="color: #ffffff">Height Reached (In points)</label>
+        <select name="autoheight" id="autoheight" class="ui dropdown">
+          <option value="0">0</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="40">40</option>
+        </select>
+      </div>
+      <div class="ui horizontal divider inverted">
+        TeleOp
+</div>
+      <div class="field">
+        <label style="color: #ffffff">Height Reached</label>
+        <select name="climb" id="climb" class="ui dropdown">
+          <option value="0">None</option>
+          <option value="1">Low Zone</option>
+          <option value="2">Middle Zone</option>
+          <option value="3">High Zone</option>
+          <option value="4">Hang</option>
+        </select>
+      </div>
+      <div class="field">
+        <label style="color: #ffffff">Amount of Climbers (inclusive)</label>
+        <select name="climbers" id="climber" class="ui dropdown">
+          <option value="0">None</option>
+          <option value="1">Low Zone</option>
+          <option value="2">Up to Middle Zone</option>
+          <option value="3">Up to High Zone</option></select>        </div>
+      <div class="field">
+        <label style="color: #ffffff">Debris Scored(inclusive)</label>
+        <select name="debris" id="debris" class="ui dropdown">
+          <option value="0">None</option>
+          <option value="1">Low Zone</option>
+          <option value="2">Up to Middle Zone</option>
+          <option value="3">Up to High Zone</option></select>        </div>
+      <div class="field">
+        <div class="ui  checkbox inverted">
+          <input type="checkbox" name="bar">
+          <label style="color: #ffffff">All Clear</label>
+        </div>
+      </div>
+      <button class="ui button inverted secondary" type="submit">Submit</button>
+    </form>
+  </a>
+</div>-->
+<div class="pusher">
+  <!-- Site content !-->
+</div>
+</body>
 <h1>Team Selection</h1>
 <div class="ui link stackable cards">
   <% @teamsSelected.each do |team| %>
@@ -41,6 +116,11 @@
 </div>
 </div>
 <script>
+  $('.ui.sticky')
+          .sticky({
+            context: '#context'
+          })
+  ;
   $('.image').visibility({
     type       : 'image',
     transition : 'fade in',

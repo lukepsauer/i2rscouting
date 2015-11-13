@@ -7,7 +7,6 @@ gem 'cloudinary'
 # Sequel ORM
 gem 'sequel'
 gem 'pg'
-#bcrypt
 gem 'json'
 
 gem 'passenger'
